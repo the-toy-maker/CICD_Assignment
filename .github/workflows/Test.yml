@@ -1,25 +1,29 @@
 name: Test
 on:
-  pull_request:
-    branches:
-      - main
+  workflow_run:
+    workflows: ["Train"]
+    types:
+      - completed
 
 jobs:
-  
   pull-and-test:
     if: github.event.workflow_run.conclusion == 'success' && github.event_name == 'workflow_run' && github.event.workflow_run.name == 'Train'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+
       - name: Pull Docker image
         run: docker pull ${{ secrets.DOCKER_USERNAME }}/mlops:latest
+
       - name: Run Docker container and Test Model
         run: |
-          OUTPUT=$(docker run ${{ secrets.DOCKER_USERNAME }}/mlops:latest python test.py)
+          OUTPUT=$(docker run mlops python test.py)
 
           echo "Score:"
-
           echo "$OUTPUT"
 
-          if [[ `echo "$OUTPUT 0.30" | awk '{print ($1 < $2)}'` == 1 ]]; then echo "Insufficient Accuracy" && exit 1; fi
+          if [[ `echo "$OUTPUT 0.30" | awk '{print ($1 < $2)}'` == 1 ]]; then 
+            echo "Insufficient Accuracy" && exit 1 
+          fi
+
