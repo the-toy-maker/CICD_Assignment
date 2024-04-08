@@ -29,8 +29,6 @@ jobs:
       - name: Set status for success
         run: echo "::set-output name=status::success"
 
-
-jobs:
   pull-and-test:
     needs: build-and-push
     runs-on: ubuntu-latest
