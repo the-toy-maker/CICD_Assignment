@@ -1,0 +1,26 @@
+name: Build and Push Docker Image on Pull Request
+
+on:
+  pull_request:
+    branches:
+      - main  # Change this to your main branch name
+
+jobs:
+  build-and-push:
+    name: Build and Push Docker Image
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Build Docker Image
+      run: |
+        docker build -t thetoymaker1729/CICD_Assignment:8be6d513d3f7f10d9ab6162a9bba1dd9069ba321 .
+
+    - name: Log into Docker Hub
+      run: docker login -u thetoymaker1729 -p Test@6174
+
+    - name: Push Docker Image
+      run: |
+        docker push thetoymaker1729/CICD_Assignment:8be6d513d3f7f10d9ab6162a9bba1dd9069ba321
