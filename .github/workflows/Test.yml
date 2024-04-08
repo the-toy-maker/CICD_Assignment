@@ -1,11 +1,11 @@
-name: Test
+name: Workflow
 on:
   pull_request:
     branches:
       - main 
 
 jobs:
-  build-and-push:
+  Train:
     runs-on: ubuntu-latest
     
     steps:
@@ -29,8 +29,8 @@ jobs:
       - name: Set status for success
         run: echo "::set-output name=status::success"
 
-  pull-and-test:
-    needs: build-and-push
+  Test:
+    needs: Train
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
