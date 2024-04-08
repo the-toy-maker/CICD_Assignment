@@ -1,4 +1,4 @@
-# Testing for All Success Scenario
+# Testing for All Success Scenario and test cases
 import pandas as pd
 from sklearn.linear_model import LogisticRegression
 import pickle
