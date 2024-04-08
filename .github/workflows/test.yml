@@ -16,6 +16,7 @@ jobs:
 
     - name: Build Docker Image
       run: |
+        docker-test
         docker build -t thetoymaker1729/CICD_Assignment:8be6d513d3f7f10d9ab6162a9bba1dd9069ba321 .
 
     - name: Log into Docker Hub
