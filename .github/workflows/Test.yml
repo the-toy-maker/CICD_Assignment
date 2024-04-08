@@ -15,7 +15,7 @@ jobs:
         run: docker pull ${{ secrets.DOCKER_USERNAME }}/mlops:latest
       - name: Run Docker container and Test Model
         run: |
-          OUTPUT=$(docker run mlops python test.py)
+          OUTPUT=$(docker run ${{ secrets.DOCKER_USERNAME }}/mlops:latest python test.py)
 
           echo "Score:"
 
