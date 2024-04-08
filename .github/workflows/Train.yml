@@ -26,3 +26,6 @@ jobs:
         run: |
           docker tag mlops ${{ secrets.DOCKER_USERNAME }}/mlops:latest
           docker push ${{ secrets.DOCKER_USERNAME }}/mlops:latest
+
+      - name: Set status for success
+        run: echo "::set-output name=status::success"
