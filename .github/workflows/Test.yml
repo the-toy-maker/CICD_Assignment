@@ -1,9 +1,34 @@
 name: Test
 on:
-  workflow_run:
-    workflows: ["Train"]
-    types:
-      - completed
+  pull_request:
+    branches:
+      - main 
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build Docker image
+        run: docker build . -t mlops
+
+      - name: Push Docker image
+        run: |
+          docker tag mlops ${{ secrets.DOCKER_USERNAME }}/mlops:latest
+          docker push ${{ secrets.DOCKER_USERNAME }}/mlops:latest
+
+      - name: Set status for success
+        run: echo "::set-output name=status::success"
+
 
 jobs:
   pull-and-test:
