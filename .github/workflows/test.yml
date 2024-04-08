@@ -21,7 +21,7 @@ jobs:
         run: docker run mlops python test.py
         
       - name: Test Model
-	run: |
+	      run: |
           OUTPUT=$(docker run mlops python test.py)
           echo "Score:"
           echo "$OUTPUT"
